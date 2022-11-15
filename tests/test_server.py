@@ -11,10 +11,8 @@ def app():
 
 
 class TestServer:
-    SERVER_URL = "http://127.0.0.1:5000"
-
     def test_url_not_found(self, app):
-        url = f"{self.SERVER_URL}/invalidURL"
+        url = "/invalidURL"
         response = app.test_client().get(url)
         body = response.text
         expected_response = {
@@ -26,7 +24,7 @@ class TestServer:
 
     @pytest.mark.parametrize("method", ["POST", "PUT", "DELETE"])
     def test_method_not_allowed(self, app, method):
-        url = f"{self.SERVER_URL}/reviews"
+        url = "/reviews"
 
         if method == "POST":
             response = app.test_client().post(url)
@@ -44,7 +42,7 @@ class TestServer:
 
     def test_invalid_business_url(self, app):
         business_url = "http://invalid-sample-url.com"
-        url = f"{self.SERVER_URL}/reviews?url={business_url}"
+        url = f"/reviews?url={business_url}"
         response = app.test_client().get(url)
         body = response.text
         expected_response = {
@@ -56,7 +54,7 @@ class TestServer:
 
     def test_valid_response(self, app):
         business_url = "https://www.lendingtree.com/reviews/business/fundbox-inc/111943337"
-        url = f"{self.SERVER_URL}/reviews?url={business_url}"
+        url = f"/reviews?url={business_url}"
         response = app.test_client().get(url)
 
         assert response.status_code == 200

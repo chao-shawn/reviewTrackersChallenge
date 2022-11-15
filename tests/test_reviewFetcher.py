@@ -17,7 +17,7 @@ class TestReviewFetcher(TestCase):
         with open("sample.html") as html_file:
             mock_soup.return_value = BeautifulSoup(html_file)
 
-        expected_result = sample_expected_result.expected_result
+        expected_result = sample_expected_result.result
         self.assertEqual(ReviewFetcher.get_reviews("test_url"), (expected_result, 200))
 
     @patch("classes.reviewFetcher.BeautifulSoup")
